@@ -20,6 +20,7 @@ THEMES = {
 	"urss": {"dossier": "assets/urss", "message": "Ты завоевал Украину. !", "couleur": (205, 0, 0)},
 	"allemagne": {"dossier": "assets/allemagne", "message": "Du hast Europa annektiert", "couleur": (255, 204, 0)},
 	"france": {"dossier": "assets/france", "message": "Vous avez rembourse la dette !", "couleur": (205, 0, 0)},
+	"japon": {"dossier": "assets/japon", "message": "お前は真珠湾を破壊した !", "couleur": (255, 255, 255)},
 }
 theme_actuel = "usa"
 
@@ -70,8 +71,8 @@ def charger_theme(nom):
 		balle = pygame.image.load(chemin(fichier + ".png")).convert_alpha()
 		images[lettre] = pygame.transform.smoothscale(balle, (TAILLE_BALLE, TAILLE_BALLE))
 	# Police du message de victoire
-	if nom == "chine":
-		police = pygame.font.Font("assets/NotoSansSC-Bold.otf", 55) # Police avec caractères chinois
+	if nom == "chine" or nom == "japon":
+		police = pygame.font.Font("assets/NotoSansSC-Bold.otf", 55) # Police avec caractères chinois (et japonais : kanji + hiragana)
 	elif nom == "urss":
 		police = pygame.font.Font("assets/RussoOne-Regular.ttf", 55) # Police avec des caractères russes (cyrilique)
 	else:
@@ -152,6 +153,8 @@ if __name__ == "__main__":
 						charger_theme("allemagne")
 					elif theme_actuel == "allemagne":
 						charger_theme("france")
+					elif theme_actuel == "france":
+						charger_theme("japon")
 					else:
 						charger_theme("usa")
 				elif RECOMMENCER.collidepoint(x, y):
