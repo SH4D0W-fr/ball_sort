@@ -8,6 +8,9 @@ pygame.init()
 # Le rectangle est repéré en haut à gauche
 fenetre = pygame.display.set_mode((800,600))
 
+pygame.mixer.music.load("assets/music.mp3")
+pygame.mixer.music.play()
+
 ## Création des éléments visuels ##
 ballR = pygame.image.load("assets/Rouge.png").convert_alpha()
 ballB = pygame.image.load("assets/Bleu.png").convert_alpha()
@@ -67,7 +70,10 @@ def afficher(depart):
 			fenetre.blit(images[pile.contenu[j]], (x, y))
 	if plateau.a_gagne():
 		# Message centré en haut de la fenêtre, au-dessus des tubes
-		texte = police.render("You are GREAT AGAIN", True, (36,51,122))
+		texte = police.render("You are GREAT AGAIN", True, (208,32,48))
+		pygame.mixer.music.stop()
+		pygame.mixer.music.load("assets/win.mp3")
+		pygame.mixer.music.play()
 		fenetre.blit(texte, texte.get_rect(center=(fenetre.get_width() // 2, TUBE_Y // 2)))
 	pygame.display.flip()
 
