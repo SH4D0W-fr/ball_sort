@@ -1,4 +1,4 @@
-import os
+import os # Pour les fichiers
 import pygame
 from logique import Plateau
 
@@ -9,7 +9,10 @@ pygame.init()
 # Le rectangle est repéré en haut à gauche
 fenetre = pygame.display.set_mode((800,600))
 
-## Thèmes ##
+#! Précision sur les variables en majuscules : selon la norme PEP8, une variable en maj = une constante (donc aucun effet technique)
+# Donc on a choisi de nommer les variables qu'il ne faut pas changer en majuscule pour éviter les bêtises²
+
+## Dictionnaires des thèmes ##
 # Chaque thème a son dossier d'assets, avec les mêmes noms de fichiers dans chaque dossier
 THEMES = {
 	"usa": {"dossier": "assets/usa", "message": "You are GREAT AGAIN", "couleur": (208,32,48)},
@@ -20,6 +23,7 @@ THEMES = {
 }
 theme_actuel = "usa"
 
+###! Claude à un peu aidé sur les coordonnées
 # Position des tubes : coin haut-gauche du tube i en (TUBE_X + ECART_TUBES*i, TUBE_Y)
 TUBE_X = 50
 TUBE_Y = 55
@@ -32,11 +36,11 @@ FOND_TUBE = 464
 TAILLE_BALLE = 34
 ECART_BALLES = 36
 
-# Bouton de changement de thème, en bas à droite sous les tubes
+# Bouton de changement de thème (avec la police impact parce qu'on parle pas chinois ou russe)
 BOUTON = pygame.Rect(630, 555, 160, 35)
 police_bouton = pygame.font.Font("assets/Impact.ttf", 20)
 
-# Bouton pour recommencer une partie, en bas à gauche sous les tubes
+# Bouton pour recommencer
 RECOMMENCER = pygame.Rect(10, 555, 160, 35)
 
 # Chronomètre, centré sous les tubes
@@ -53,26 +57,26 @@ def chemin(nom_fichier):
 	return fichier
 
 def charger_theme(nom):
-	# Charge les images, la police et la musique du thème nom
+	# Charge les images, la police et la musique du thème "nom"
 	global theme_actuel, fond, tube, images, police
 	theme_actuel = nom
-	# Image de fond, mise à la taille de la fenêtre (elle a déjà les mêmes proportions, donc pas de déformation)
+	# Image de fond, mise à la taille de la fenêtre (heureusement qu'il y a la fonction smoothscale)
 	fond = pygame.image.load(chemin("Fond.png")).convert()
 	fond = pygame.transform.smoothscale(fond, fenetre.get_size())
 	tube = pygame.image.load(chemin("Tube.png")).convert_alpha()
-	# Pour retrouver l'image d'une balle à partir de sa couleur, au moment d'afficher (à l'aide d'un dictionnaire)
+	# Pour retrouver l'image d'une balle à partir de sa couleur, au moment d'afficher (on scale aussi pour éviter les problèmes de tailles car toutes les images ne font pas 40x40, Romain ne les a pas toute resize)
 	images = {}
 	for lettre, fichier in [("R", "Rouge"), ("B", "Bleu"), ("J", "Jaune")]:
 		balle = pygame.image.load(chemin(fichier + ".png")).convert_alpha()
 		images[lettre] = pygame.transform.smoothscale(balle, (TAILLE_BALLE, TAILLE_BALLE))
 	# Police du message de victoire
 	if nom == "chine":
-		police = pygame.font.Font("assets/NotoSansSC-Bold.otf", 55)
+		police = pygame.font.Font("assets/NotoSansSC-Bold.otf", 55) # Police avec caractères chinois
 	elif nom == "urss":
-		police = pygame.font.Font("assets/RussoOne-Regular.ttf", 55)
+		police = pygame.font.Font("assets/RussoOne-Regular.ttf", 55) # Police avec des caractères russes (cyrilique)
 	else:
-		police = pygame.font.Font("assets/Impact.ttf", 55)
-	# Si la partie est déjà gagnée, on garde la musique de victoire
+		police = pygame.font.Font("assets/Impact.ttf", 55) # Police avec nos lettres (je sais pas le nom de notre alphabet)
+	# Si la partie est déjà gagnée, on garde la musique de victoire 
 	if plateau.a_gagne():
 		pygame.mixer.music.load(chemin("win.mp3"))
 	else:
@@ -183,6 +187,6 @@ if __name__ == "__main__":
 		else:
 			secondes = (fin - debut) // 1000
 		afficher(depart, secondes)
-		# 30 images par seconde suffisent, ça évite d'utiliser tout le processeur
+		# 30 images par seconde suffisent, ça évite d'utiliser tout le processeur (surtout avec les pc du lycée ça explose sinon)
 		horloge.tick(30)
 	pygame.quit()

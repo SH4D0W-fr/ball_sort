@@ -1,3 +1,5 @@
+# Code d'Achille et de Romain
+
 import random
 
 class Pile():
@@ -22,6 +24,7 @@ class Pile():
 
 class Plateau():
     # R = rouge, B = bleu, J = jaune
+    #! Même chose que dans main.py pour les constantes
     COULEURS = ["R", "B", "J"]
     NB_TUBES = 5
     CAPACITE = 8
