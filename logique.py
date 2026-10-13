@@ -21,8 +21,7 @@ class Pile():
 
 
 class Plateau():
-    # Les 5 tubes du jeu, chacun étant une Pile
-    # Mêmes codes couleur que dans ui.py : R = rouge, B = bleu, J = jaune
+    # R = rouge, B = bleu, J = jaune
     COULEURS = ["R", "B", "J"]
     NB_TUBES = 5
     CAPACITE = 8
@@ -35,7 +34,6 @@ class Plateau():
 
     def repartition(self):
         # CAPACITE balles de chaque couleur, mélangées puis réparties dans les premiers tubes
-        # (un tube par couleur, rempli au maximum)
         balles = self.COULEURS * self.CAPACITE
         random.shuffle(balles)
         for i in range(len(self.COULEURS)):
