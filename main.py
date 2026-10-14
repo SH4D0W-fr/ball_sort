@@ -22,6 +22,12 @@ THEMES = {
 	"allemagne": {"dossier": "assets/allemagne", "message": "Du hast Europa annektiert", "couleur": (255, 204, 0)},
 	"france": {"dossier": "assets/france", "message": "Vous avez rembourse la dette !", "couleur": (205, 0, 0)},
 	"japon": {"dossier": "assets/japon", "message": "お前は真珠湾を破壊した !", "couleur": (255, 255, 255)},
+	"streamer": {"dossier": "assets/streamer", "message": "Tu es devenu top 1 twitch France !", "couleur": (145, 70, 255)},
+	"minecraft": {"dossier": "assets/minecraft", "message": "Ender Dragon vaincu !", "couleur": (255, 255, 85)},
+	"finals": {"dossier": "assets/finals", "message": "Vous avez gagne THE FINALS !", "couleur": (230, 25, 40)},
+	"pologne": {"dossier": "assets/pologne", "message": "Zjadłeś wszystkie pierogi !", "couleur": (220, 20, 60)},
+	# L'hébreu se lit de droite à gauche mais pygame affiche de gauche à droite, donc on retourne la phrase avec [::-1]
+	"israel": {"dossier": "assets/israel", "message": "ניצחת את כולם"[::-1], "couleur": (0, 56, 184)},
 }
 theme_actuel = "usa"
 
@@ -74,8 +80,10 @@ def charger_theme(nom):
 	# Police du message de victoire
 	if nom == "chine" or nom == "japon":
 		police = pygame.font.Font("assets/NotoSansSC-Bold.otf", 55) # Police avec caractères chinois (et japonais : kanji + hiragana)
-	elif nom == "urss":
-		police = pygame.font.Font("assets/RussoOne-Regular.ttf", 55) # Police avec des caractères russes (cyrilique)
+	elif nom == "urss" or nom == "pologne":
+		police = pygame.font.Font("assets/RussoOne-Regular.ttf", 55) # Police avec des caractères russes (cyrilique) et polonais (ł, ś...)
+	elif nom == "israel":
+		police = pygame.font.Font("assets/NotoSansHebrew-Bold.ttf", 55) # Police avec des caractères hébreux (pas de "!" dedans)
 	else:
 		police = pygame.font.Font("assets/Impact.ttf", 55) # Police avec nos lettres (je sais pas le nom de notre alphabet)
 	# Si la partie est déjà gagnée, on garde la musique de victoire 
@@ -156,6 +164,16 @@ if __name__ == "__main__":
 						charger_theme("france")
 					elif theme_actuel == "france":
 						charger_theme("japon")
+					elif theme_actuel == "japon":
+						charger_theme("streamer")
+					elif theme_actuel == "streamer":
+						charger_theme("minecraft")
+					elif theme_actuel == "minecraft":
+						charger_theme("finals")
+					elif theme_actuel == "finals":
+						charger_theme("pologne")
+					elif theme_actuel == "pologne":
+						charger_theme("israel")
 					else:
 						charger_theme("usa")
 				elif RECOMMENCER.collidepoint(x, y):
