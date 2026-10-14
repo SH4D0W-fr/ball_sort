@@ -6,6 +6,7 @@ from logique import Plateau
 ## Initialisation de l'interface ##
 
 pygame.init()
+pygame.display.set_caption('BallSort Utlra Pro Max') # Titre de la fenêtre
 # Le rectangle est repéré en haut à gauche
 fenetre = pygame.display.set_mode((800,600))
 
