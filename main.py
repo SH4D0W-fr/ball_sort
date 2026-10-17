@@ -31,7 +31,6 @@ THEMES = {
 	# L'hébreu se lit de droite à gauche mais pygame affiche de gauche à droite, donc on retourne la phrase avec [::-1]
 	"israel": {"dossier": "assets/israel", "message": "ניצחת את כולם"[::-1], "couleur": (0, 56, 184)},
 	"vietnam": {"dossier": "assets/vietnam", "message": "Bạn đã đánh bại nước Mỹ !", "couleur": (255, 205, 0)},
-	# La police Impact n'a pas d'apostrophe ni de "!", donc message sans
 	"ia": {"dossier": "assets/ia", "message": "Quota depasse", "couleur": (255, 0, 200)},
 }
 theme_actuel = "usa"
@@ -62,13 +61,13 @@ police_chrono = pygame.font.Font("assets/Impact.ttf", 26)
 
 # Bouton du tableau des scores, entre "Recommencer" et le chronomètre
 SCORES = pygame.Rect(180, 555, 150, 35)
-# Tableau des scores affiché par-dessus les tubes (police Noto car Impact n'a pas les ":" et les "/")
+# Tableau des scores affiché par-dessus les tubes
 TABLEAU = pygame.Rect(150, 70, 500, 465)
 police_tableau = pygame.font.Font("assets/NotoSansSC-Bold.otf", 20)
 police_titre = pygame.font.Font("assets/NotoSansSC-Bold.otf", 30)
-NB_SCORES = 10 # Nombre de meilleurs temps affichés
+NB_SCORES = 10 # Nombre de meilleurs temps affichés (pour être affiché faut être bon !)
 
-# Fichier où sont sauvegardés les temps des parties gagnées (une ligne par partie : date, thème, temps en secondes)
+# Fichier csv avec les scores (date, thème, temps en secondes)
 FICHIER_SCORES = "scores.csv"
 
 plateau = Plateau()
