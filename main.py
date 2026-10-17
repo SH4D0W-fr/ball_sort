@@ -1,14 +1,26 @@
 import os # Pour les fichiers
+import sys # Pour savoir si on tourne depuis l'exécutable
 import csv # Pour la sauvegarde des temps
 from datetime import datetime # Pour la date des scores
 import pygame
 from logique import Plateau
 
+#! Partie entièrement faite par Claude (pour l'exécutable)
+# Dans l'exécutable (PyInstaller), les assets sont extraits dans un dossier temporaire (sys._MEIPASS)
+# On se place dedans pour garder les chemins relatifs, mais les scores restent à côté de l'exe
+if getattr(sys, "frozen", False):
+	DOSSIER_JEU = os.path.dirname(sys.executable)
+	os.chdir(getattr(sys, "_MEIPASS")) # getattr car _MEIPASS n'existe que dans l'exe (Pylance ne le connaît pas)
+else:
+	DOSSIER_JEU = "."
+
+#! Fin de la partie entièrement faite par Claude
 
 ## Initialisation de l'interface ##
 
 pygame.init()
 pygame.display.set_caption('BallSort Utlra Pro Max') # Titre de la fenêtre
+pygame.display.set_icon(pygame.image.load("assets/icone.png")) # Icône de la fenêtre
 # Le rectangle est repéré en haut à gauche
 fenetre = pygame.display.set_mode((800,600))
 
@@ -68,7 +80,7 @@ police_titre = pygame.font.Font("assets/NotoSansSC-Bold.otf", 30)
 NB_SCORES = 10 # Nombre de meilleurs temps affichés (pour être affiché faut être bon !)
 
 # Fichier csv avec les scores (date, thème, temps en secondes)
-FICHIER_SCORES = "scores.csv"
+FICHIER_SCORES = os.path.join(DOSSIER_JEU, "scores.csv")
 
 plateau = Plateau()
 

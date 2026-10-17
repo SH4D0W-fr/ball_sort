@@ -1,2 +1,5 @@
 __pycache__/*
 scores.csv
+build/
+dist/
+*.spec
